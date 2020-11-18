@@ -12,6 +12,13 @@ const texts = {
     обработчик клика функцию clickHandler.
 */
 
+let text = document.querySelector('.text');
+let links =  document.querySelectorAll('.nav-link');
+
+links.forEach(function (event) {
+    event.addEventListener('click', clickHandler)
+});
+
 
 /**
  * Обработчик клика по .nav-link
@@ -20,7 +27,8 @@ const texts = {
 function clickHandler(event) {
     // здесь вызывайте changeText и changeActiveClass, и передавайте
     // им объект события.
-   
+    changeText(event);
+    changeActiveClass(event);
 }
 
 /**
@@ -29,7 +37,12 @@ function clickHandler(event) {
  * @param {MouseEvent} event 
  */
 function changeActiveClass(event) {
-    
+    let prevlink = document.querySelector('.nav-link.active');
+    if (!prevlink.isEqualNode(event.currentTarget)) {
+        prevlink.classList.remove('active');
+        event.currentTarget.classList.add('active');
+    }
+
 }
 
 /**
@@ -39,5 +52,6 @@ function changeActiveClass(event) {
  * @param {MouseEvent} event 
  */
 function changeText(event) {
-    
+    let index = 'text' + event.currentTarget.textContent.match(/\d+/)[0];
+    text.innerText = texts[index];
 }
